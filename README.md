@@ -1,2 +1,0 @@
-# TMA.MongoDB
-MongoDB homework
