@@ -244,7 +244,7 @@ async function example11() {
     const worstScoreBound = 40;
     const pipeline = [
       { $match : { scores: { $elemMatch: { type: 'homework', score: { $lte: worstScoreBound } } } } },
-      { $project: { _id: 0, name: 1, homework: {$arrayElemAt: ['$scores.score', -1] } } },
+      { $project: { _id: 0, name: 1, homework: { $arrayElemAt: ['$scores.score', -1] } } },
       { $sort: { homework: -1 } },
     ];
 
@@ -256,6 +256,7 @@ async function example11() {
     console.error(err);
   }
 }
+
 // - Find all students who have the best score for quiz and the worst for homework, sort by ascending
 
 async function example12() {
@@ -271,7 +272,7 @@ async function example12() {
           homework: { $arrayElemAt: ["$scores.score", -1] },
           quiz: { $arrayElemAt: ["$scores.score", 1] }
       }},
-      { $sort: { quiz: 1 } },
+      { $sort: { quiz: 1, homework: 1 } },
     ];
 
     const result = await studentCollection.aggregate(pipeline).toArray();
